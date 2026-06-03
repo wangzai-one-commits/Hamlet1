@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>哈姆雷特人格测试 | 测测你有几分像哈姆雷特</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0b0a0c;
+            background-image: radial-gradient(circle at 30% 20%, rgba(45, 35, 30, 0.4) 0%, #030202 100%);
+            font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+            color: #ece4dc;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.2rem;
+        }
+        .container {
+            max-width: 780px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .cover {
+            background: rgba(12, 10, 13, 0.68);
+            backdrop-filter: blur(3px);
+            border-radius: 2rem;
+            border: 1px solid rgba(200, 175, 140, 0.35);
+            padding: 3rem 2rem 3rem;
+            text-align: center;
+            box-shadow: 0 25px 40px -12px black;
+        }
+        .main-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.8rem;
+            font-weight: 600;
+            letter-spacing: 12px;
+            background: linear-gradient(135deg, #f2e2c6, #c9aa6f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+        }
+        .subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-style: italic;
+            letter-spacing: 2px;
+            color: #d4bc8a;
+            border-top: 1px solid #4a3e34;
+            display: inline-block;
+            padding-top: 0.6rem;
+            margin-top: 0.2rem;
+        }
+        .ornament {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 1.8rem 0 1.8rem;
+        }
+        .line {
+            width: 55px;
+            height: 1px;
+            background: #c9aa6f;
+            opacity: 0.6;
+        }
+        .star {
+            color: #c9aa6f;
+            font-size: 0.9rem;
+        }
+        .start-btn {
+            background: #c9aa6f;
+            border: none;
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 3px;
+            padding: 0.75rem 2.8rem;
+            border-radius: 40px;
+            color: #1f1814;
+            cursor: pointer;
+            transition: 0.25s ease;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.4);
+            margin: 0.5rem 0 2rem;
+        }
+        .start-btn:hover {
+            background: #e2bc7c;
+            transform: scale(0.97);
+        }
+        .quote-block {
+            margin-top: 2rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 0.85rem;
+            color: #bba16d;
+            line-height: 1.45;
+        }
+        .quote-author {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            margin-top: 6px;
+            opacity: 0.7;
+        }
+        .footer-note {
+            margin-top: 1.8rem;
+            font-size: 0.65rem;
+            font-family: 'Josefin Sans', sans-serif;
+            letter-spacing: 1.5px;
+            opacity: 0.5;
+            border-top: 1px solid #3a2e28;
+            display: inline-block;
+            padding-top: 1rem;
+        }
+        .quiz-wrapper {
+            background: rgba(12, 10, 13, 0.7);
+            backdrop-filter: blur(3px);
+            border-radius: 2rem;
+            border: 1px solid rgba(200, 175, 140, 0.35);
+            overflow: hidden;
+        }
+        .quiz-header {
+            background: linear-gradient(145deg, #1e191b 0%, #0c090b 100%);
+            padding: 1.2rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid #c5a059;
+        }
+        .quiz-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            letter-spacing: 4px;
+            background: linear-gradient(135deg, #f5e7ce, #cfb284);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .quiz-panel {
+            padding: 2rem 1.8rem 1.5rem;
+        }
+        .progress-area {
+            margin-bottom: 1.8rem;
+        }
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            font-family: 'Josefin Sans', monospace;
+            letter-spacing: 1px;
+            margin-bottom: 0.4rem;
+        }
+        .progress-bar-bg {
+            background: #2e2622;
+            border-radius: 20px;
+            height: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: #c9aa6f;
+            width: 0%;
+            height: 100%;
+            transition: width 0.25s;
+        }
+        .question-card {
+            margin-bottom: 1.5rem;
+            padding: 0.2rem 0 0.5rem;
+        }
+        .q-num {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            background: #2e241f;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            margin-bottom: 1rem;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+        .q-text {
+            font-size: 1.3rem;
+            font-weight: 500;
+            line-height: 1.35;
+            margin-bottom: 1.2rem;
+            border-left: 3px solid #c9aa6f;
+            padding-left: 1rem;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .option {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+        .option:hover {
+            background: rgba(201, 170, 111, 0.1);
+            border-color: #c9aa6f60;
+            transform: translateX(5px);
+        }
+        .option input[type="radio"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid #c9aa6f;
+            border-radius: 3px;
+            background: transparent;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .option input[type="radio"]:checked {
+            background: #c9aa6f;
+            box-shadow: inset 0 0 0 2px #1f1b1c;
+        }
+        .opt-label {
+            font-size: 0.9rem;
+            flex: 1;
+            line-height: 1.35;
+        }
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+        }
+        button {
+            background: #2a2220;
+            border: 1px solid #bc9a60;
+            padding: 0.55rem 1.5rem;
+            font-family: 'Josefin Sans', sans-serif;
+            font-weight: 500;
+            font-size: 0.85rem;
+            border-radius: 60px;
+            color: #f2e2ca;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:hover {
+            background: #c9aa6f;
+            color: #0d0a09;
+        }
+        .submit-btn {
+            background: #c9aa6f;
+            color: #1a130f;
+        }
+        .result-page {
+            background: rgba(8, 6, 9, 0.96);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            padding: 2rem 1.8rem;
+            border: 1px solid #c9aa6f55;
+            text-align: center;
+        }
+        .result-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            background: linear-gradient(145deg, #f7e5cc, #cbad7a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .result-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #e9cf9b;
+            margin: 0.3rem 0;
+        }
+        .result-stars {
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+        .result-analysis {
+            text-align: left;
+            margin-top: 1.2rem;
+            border-left: 3px solid #cbad7a;
+            padding-left: 1.2rem;
+        }
+        .result-analysis p {
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+            text-align: justify;
+        }
+        .result-analysis p:last-of-type {
+            margin-bottom: 0;
+        }
+        .famous-person-block {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        .famous-person-block:last-child {
+            margin-bottom: 0;
+        }
+        .famous-person-name {
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+            text-align: left;
+        }
+        .famous-person-desc {
+            text-align: justify;
+            line-height: 1.5;
+        }
+        .real-signature {
+            margin: 1.5rem 0 0.8rem;
+            font-style: italic;
+            color: #cfb37a;
+            text-align: center;
+            font-size: 0.85rem;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .restart-btn {
+            background: none;
+            border: 1px solid #ac8f5e;
+            margin-top: 1.2rem;
+        }
+        .hide {
+            display: none;
+        }
+        .warning-msg {
+            background: #421f1a90;
+            padding: 0.5rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .quiz-footer {
+            text-align: center;
+            font-size: 0.6rem;
+            padding: 1rem 0;
+            opacity: 0.4;
+        }
+        @media (max-width: 550px) {
+            .cover { padding: 2rem 1.2rem; }
+            .main-title { font-size: 2.2rem; letter-spacing: 6px; }
+            .q-text { font-size: 1.1rem; }
+            .opt-label { font-size: 0.8rem; }
+            .result-title { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div id="coverSection" class="cover">
+        <div class="main-title">H A M L E T</div>
+        <div class="subtitle">测测你有几分像哈姆雷特</div>
+        <div class="ornament">
+            <span class="line"></span>
+            <span class="star">✦</span>
+            <span class="line"></span>
+        </div>
+        <button id="startTestBtn" class="start-btn">开始测试</button>
+        <div class="quote-block">
+            “即使被禁锢在果壳之中，我依然自诩为无限空间之王。”
+            <div class="quote-author">—— 莎士比亚</div>
+        </div>
+        <div class="footer-note">莎士比亚 · 哈姆雷特 | 永恒追问</div>
+    </div>
+
+    <div id="quizWrapper" class="quiz-wrapper hide">
+        <div class="quiz-header">
+            <h2>H A M L E T</h2>
+        </div>
+        <div class="quiz-panel">
+            <div class="progress-area">
+                <div class="progress-text"><span>灵魂光谱</span><span id="qCounter">第1 / 20题</span></div>
+                <div class="progress-bar-bg"><div class="progress-fill" id="progressFill"></div></div>
+            </div>
+            <div id="questionsContainer"></div>
+            <div class="nav-buttons">
+                <button id="prevBtn" style="visibility:hidden;">◀ 回溯</button>
+                <button id="nextBtn">前行 ▶</button>
+                <button id="submitBtn" class="submit-btn hide">⚜️ 揭示命运 ⚜️</button>
+            </div>
+        </div>
+        <div class="quiz-footer">“余下的唯有沉默。” —— 莎士比亚</div>
+    </div>
+
+    <div id="resultContainer" class="result-page hide"></div>
+</div>
+
+<script>
+    // ======================= 题库 ========================
+    const questions = [
+        { text: "当你遭遇巨大的不公或背叛时，你的第一反应通常是？", options: ["立即行动，想办法让对方付出代价", "反复思考为什么会发生，纠结自己是否有责任", "表面若无其事，暗中观察和收集信息", "找信赖的人倾诉，寻求情感支持或建议"], scores: [2,4,3,1] },
+        { text: "你如何看待“死亡”？", options: ["一个需要避免但不可抗拒的自然结局", "时常思考它的意义，甚至因此对现实感到一丝虚无", "是解决痛苦的途径之一，但正因为未知而不敢靠近", "很少主动去想，更关注活着的事"], scores: [1,4,3,2] },
+        { text: "做一个决定前，你通常会：", options: ["快速做决定，相信直觉", "反复权衡利弊，甚至过度分析导致迟迟不行动", "先听取周围人意见，再自己做判断", "凭当下情绪或冲动行事"], scores: [2,4,3,1] },
+        { text: "朋友形容你的性格时，最容易提到哪个词？", options: ["心思细腻", "幽默风趣", "沉稳内敛", "开朗热忱"], scores: [4,3,2,1] },
+        { text: "当你感到痛苦或愤怒时，你的情绪通常：", options: ["来得快，去得也快", "会持续很久，反复被触发", "表面平静，内心翻涌", "很快转化成其他情绪（比如自责、冷漠、或者反而更清醒）"], scores: [1,4,3,2] },
+        { text: "你觉得“复仇”或“讨回公道”是必要的吗？", options: ["是，必须让对方付出代价", "是，但未必用极端手段，更希望真相被看见", "不一定，代价太大时可能会放弃", "不必要，冤冤相报何时了"], scores: [2,3,4,1] },
+        { text: "你在亲密关系中，最容易表现出：", options: ["强烈的占有欲和怀疑倾向", "过度理想化对方，容易受伤", "忽冷忽热，让人捉摸不透", "直接表达爱和不满"], scores: [3,2,4,1] },
+        { text: "如果你看到一件明显不公的事发生在别人身上，你会：", options: ["当场站出来制止", "事后匿名举报或支持受害者", "内心愤怒但不敢行动，怕惹麻烦", "装作没看见，但内心会谴责自己"], scores: [2,3,4,1] },
+        { text: "你的人生观更接近：", options: ["“世界是舞台，我们都是演员”", "“生存还是毁灭，这是个问题”", "“最重要的是忠于自己”", "“行动胜于空谈”"], scores: [2,4,3,1] },
+        { text: "如果给你一个重新选择人生的机会，你会：", options: ["彻底换一种活法，不要现在的一切", "调整一部分选择，但保留核心经历", "不大想改变，接受命运", "希望从未出生或存在过"], scores: [3,2,1,4] },
+        { text: "你独处时最常做的事情是：", options: ["放空或刷手机", "反复回想过去的对话或事件", "计划未来但很少执行", "读书、写作或创作"], scores: [1,4,3,2] },
+        { text: "别人说你“想太多”时，你的反应是：", options: ["无所谓，我就是这样", "有点受伤，觉得不被理解", "会试着解释，但最后放弃", "开始怀疑自己是不是真的有问题"], scores: [2,3,4,1] },
+        { text: "你更喜欢哪种戏剧或电影结局？", options: ["善恶有报，清晰收场", "开放式结局，引人思考", "悲剧但深刻，让人久久难忘", "不管什么结局，只要情感上有共鸣就行"], scores: [1,3,4,2] },
+        { text: "你对“命运”的态度是：", options: ["我相信人定胜天", "我相信有某种安排，但不会认命", "时常觉得被命运捉弄", "命运是弱者的借口，强者的谦辞"], scores: [1,2,4,3] },
+        { text: "当你爱一个人却无法表达时，你会：", options: ["默默付出，希望对方发现", "写下来但不发送", "找借口靠近，试探性聊天", "酒后才敢说真话"], scores: [3,4,2,1] },
+        { text: "你如何看待“虚伪”？", options: ["无法忍受，必须戳穿", "理解但内心厌恶", "偶尔自己也这样", "这是生存的必要技能"], scores: [2,3,4,1] },
+        { text: "如果给你一个王位（或领导职位），你最担心的是：", options: ["被人背叛或暗算", "做错决定害了所有人", "无法达到自己的理想标准", "失去自由和普通人的生活"], scores: [2,3,4,1] },
+        { text: "你更容易理解或共鸣以下哪种行为？", options: ["会不自觉地自言自语", "写了东西又删掉/撕掉/不发出去", "在重要决定前反复犹豫，拖到最后", "在不想应付人时，故意表现得很冷淡"], scores: [3,4,2,1] },
+        { text: "你容易对哪种人产生共鸣？", options: ["孤独的理想主义者", "被误解的叛逆者", "在痛苦中幽默自嘲的人", "沉默的承受者"], scores: [4,3,2,1] },
+        { text: "最终，你觉得人生的核心问题是：", options: ["如何活得有意义", "如何面对无法改变的事", "如何忠于自己", "如何不伤害他人的同时保全自己"], scores: [4,3,2,1] }
+    ];
+
+    const totalQ = questions.length;
+    let userAnswers = new Array(totalQ).fill(null);
+    let currentIdx = 0;
+
+    const coverDiv = document.getElementById('coverSection');
+    const quizWrapper = document.getElementById('quizWrapper');
+    const resultContainer = document.getElementById('resultContainer');
+    const startBtn = document.getElementById('startTestBtn');
+    const questionsContainer = document.getElementById('questionsContainer');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const qCounterSpan = document.getElementById('qCounter');
+    const progressFill = document.getElementById('progressFill');
+
+    function mapToNewScore(oldScore) {
+        const minOld = 20, maxOld = 80;
+        const minNew = 0, maxNew = 100;
+        return Math.round((oldScore - minOld) / (maxOld - minOld) * (maxNew - minNew) + minNew);
+    }
+
+    // 根据新分数返回标题（含几分像）和对应文案
+    function getResultDataByNewScore(score) {
+        // 确定档位和标题
+        let title = "";
+        if (score >= 0 && score <= 30) {
+            title = "行动派 · 完全不像哈姆雷特";
+        } else if (score >= 31 && score <= 40) {
+            title = "清醒的旁观者 · 四分像哈姆雷特";
+        } else if (score >= 41 && score <= 50) {
+            title = "清醒的旁观者 · 五分像哈姆雷特";
+        } else if (score >= 51 && score <= 60) {
+            title = "清醒的旁观者 · 六分像哈姆雷特";
+        } else if (score >= 61 && score <= 70) {
+            title = "忧郁的准王子 · 七分像哈姆雷特";
+        } else if (score >= 71 && score <= 80) {
+            title = "忧郁的准王子 · 八分像哈姆雷特";
+        } else if (score >= 81 && score <= 90) {
+            title = "哈姆雷特本特 · 九分像哈姆雷特";
+        } else {
+            title = "哈姆雷特本特 · 十分像哈姆雷特";
+        }
+
+        // 根据分数区间返回对应文案（完全保留原符号、格式、两端对齐）
+        if (score >= 0 && score <= 30) {
+            return {
+                title: title,
+                analysisHtml: `
+                    <p><strong>⚜️ 灵魂剖析</strong><br>你是典型的“做”大于“想”的人。不纠结于意义，不沉溺于痛苦，遇到问题第一反应是解决而不是追问“为什么”。你像奥菲莉亚的哥哥雷欧提斯——行动快于言语，甚至有点冲动。在你的世界里，犹豫是可耻的，悲伤是需要被甩掉的包袱。你相信行动本身就是答案，与其在原地打转，不如先迈出一步再说。这种特质让你在危机中往往能迅速脱身，但也可能让你错失一些需要耐心沉淀才能看见的风景。</p>
+                    <p><strong>📜 潜在阴影 / 警示</strong><br>你可能会压抑深层情感，或用行动逃避思考。当你不停地做事、运动、社交、刷手机——有时候不是为了解决问题，而是为了不让自己停下来面对内心的声音。偶尔慢下来，听听内心的声音，你会发现不一样的风景。</p>
+                    <p><strong>🎭 给你的箴言</strong><br>试着允许自己停留片刻，深邃的情感有时也藏着灵感。</p>
+                    <p><strong>🏛️ 相似气质名人</strong><br>玛格丽特·撒切尔<br>英国历史上第一位女首相，也是20世纪最具争议和影响力的政治人物之一。她以坚定的立场、强硬的作风，被称为“铁娘子”，改变了英国的政治和经济格局。</p>
+                `,
+                signature: "“所有理论都是灰色的，生命的金树常青。” —— 歌德《浮士德》"
+            };
+        } else if (score >= 31 && score <= 60) {
+            return {
+                title: title,
+                analysisHtml: `
+                    <p><strong>⚜️ 灵魂剖析</strong><br>你有一定的敏感和自省力，但不会被它吞噬。你能理解哈姆雷特的犹豫，甚至自己偶尔也会过度思考，但最终会选择行动。你像哈姆雷特信赖的朋友霍拉旭一般，理性、忠诚、冷静、懂得适可而止。你不排斥深刻的情绪，但不会让它主导你的人生；你会思考意义，但不会因此停下脚步。你知道什么时候该深入，什么时候该抽离，这种分寸感让你既不至于麻木，也不至于沉溺。这是大多数人最健康的“文艺人格浓度”：保有深度，不失活力。</p>
+                    <p><strong>📜 潜在阴影 / 警示</strong><br>你既能感受悲剧的美，又能避开它的陷阱。在朋友陷入情绪漩涡时，你是那个既听得懂又能拉一把的人；在自己遇到困境时，你允许自己难过，但不会长期困在里面。适合做朋友们的“稳定器”。</p>
+                    <p><strong>🎭 给你的箴言</strong><br>保持这种平衡，偶尔纵容自己沉浸在戏剧里也无妨。</p>
+                    <p><strong>🏛️ 相似气质名人</strong><br>达·芬奇<br>文艺复兴时期的巨匠，理性、克制，艺术与科学在他身上完美融合。他不急于下结论，而是仔细观察、记录、思考，再行动。<br><br>刘慈欣<br>科幻作家，以冷静的理性思维审视宇宙与人性，在宏大视野下保留着温度。他的作品里没有泛滥的情绪，却有一种深沉的悲悯。<br><br>他们都懂得“抽离”的艺术——既能深入思考，又不会被情绪淹没。他们理解痛苦，但不沉溺其中；他们看见荒诞，但不因此绝望。这种清醒，让他们成为人群中那个看得最清楚，却不会碎掉的人。</p>
+                `,
+                signature: "“世事并无好坏，全看你们如何去想。” —— 莎士比亚《哈姆雷特》"
+            };
+        } else if (score >= 61 && score <= 80) {
+            return {
+                title: title,
+                analysisHtml: `
+                    <p><strong>⚜️ 灵魂剖析</strong><br>你拥有高度的内省倾向和感知力。经常在“做还是不做”之间摇摆——不是因为懒，而是因为太想做出“正确”的选择。你容易对人性失望，也容易对他人产生理想化的期待。朋友觉得你“有故事”，甚至有点神秘，但你也容易被负面情绪困住好几天。你的幽默往往是黑色的，你的沉默往往是沉重的。你活在自己的思想里，有时会忘记世界还在继续运转。你渴望被理解，又害怕被看透；你希望有人能接住你的情绪，又担心成为别人的负担。这种矛盾让你既深刻又孤独。</p>
+                    <p><strong>📜 潜在阴影 / 警示</strong><br>容易进入“延宕”循环——想得太多，动得太少。你会为没做过的事后悔，像哈姆雷特错过刺杀克劳狄斯的那个绝佳机会。你可能会在某个安静的夜晚突然问自己：“我是不是一直在逃避？”而答案是沉默。</p>
+                    <p><strong>🎭 给你的箴言</strong><br>少一点完美主义，行动本身就是答案。允许自己犯错，比永远正确更重要。</p>
+                    <p><strong>🏛️ 相似气质名人</strong><br>村上春树笔下的主人公<br>他们通常是普通的独居者，听爵士乐、煮意大利面、读小说、养猫，与这个世界保持着一种礼貌而疏离的距离。他们不善于直接行动，更擅长在内心消化一切——失去、孤独、背叛、死亡。他们会为一件小事反复琢磨，会在深夜对着空气自言自语，会在重要决定前犹豫很久。他们不是英雄，也不想成为英雄，但他们有一种“即便世界很糟，我也要按自己的节奏活下去”的倔强。这种气质，和哈姆雷特如出一辙。</p>
+                `,
+                signature: "“我仅仅是其感受的包裹。我仅仅是其思想的残羹。” —— 佩索阿《不安之书》"
+            };
+        } else {
+            return {
+                title: title,
+                analysisHtml: `
+                    <p><strong>⚜️ 灵魂剖析</strong><br>你就是穿现代衣着的丹麦王子。存在主义焦虑对你而言不是哲学概念，而是日常背景音。你对人性失望过，对理想执着过，在行动与道德之间反复撕扯过。你聪明而痛苦，深刻而孤独。你能写出最锋利的话语，却在关键时刻迟疑；你能看穿所有人的伪善，却很难原谅自己的软弱。你或许有过“希望从未出生”的念头，但你仍然活着，因为你还有未完成的“复仇”——哪怕那只是对平庸生活的反抗。<br><br>你活在自己的头脑里，那里有一座巨大的剧院，每天都在上演不同的剧本。你能预演一百种结局，却常常迈不出第一步。你渴望被理解，又害怕被看穿；你希望有人能接住你的深渊，又担心对方会掉进来。你有时会羡慕那些“想得少”的人，但你知道，你回不去了。</p>
+                    <p><strong>📜 潜在阴影 / 警示</strong><br>你可能会“用思想杀死行动”。过度分析有时会让你错失爱人、机会甚至自己。你可能会因为担心说错话而保持沉默，直到对方离开；可能会因为害怕选错路而停在原地，直到机会消失；可能会在脑子里把一件事翻来覆去想一千遍，最后什么都没做。这背后往往是一种对完美的执念——害怕犯错，害怕后悔，害怕“万一我不是我想象中的那个人”。</p>
+                    <p><strong>🎭 给你的箴言</strong><br>不妨学学哈姆雷特最后那一瞬的“冲动”——在第五幕第五场，他终于没有犹豫，刺中了国王。有时候，完成比完美重要。找一个像霍拉旭那样的人陪着你。</p>
+                    <p><strong>🏛️ 相似气质名人</strong><br>太宰治<br>日本作家，《人间失格》作者，一生挣扎于自我毁灭与自我救赎之间。他写道：“生而为人，我很抱歉。”这句话几乎成了他的墓志铭——痛苦、自责、无法与世界和解，但又不断地写、不断地活。他不是不想走出来，而是走不出来。他的文字里没有愤怒，只有一种温柔的绝望，像是哈姆雷特在独白时的语气——清醒地看着自己沉下去，想要抓住什么，但手抬不起来。<br><br>他就是那个穿和服的丹麦王子。</p>
+                `,
+                signature: "“主，你认识我，我也将认识你。” —— 奥古斯丁《忏悔录》"
+            };
+        }
+    }
+
+    function showResult() {
+        for(let i=0;i<totalQ;i++){
+            if(userAnswers[i] === null){
+                showWarning(`还有第${i+1}题未作答，请完成所有题目再揭示命运。`);
+                return;
+            }
+        }
+        let rawScore = 0;
+        for(let i=0;i<totalQ;i++){
+            rawScore += questions[i].scores[userAnswers[i]];
+        }
+        const finalScore = mapToNewScore(rawScore);
+        const data = getResultDataByNewScore(finalScore);
+        
+        const html = `
+            <div class="result-title">${data.title}</div>
+            <div class="result-score">${finalScore} 分</div>
+            <div class="result-analysis">
+                ${data.analysisHtml}
+            </div>
+            <div class="real-signature">${data.signature}</div>
+            <button id="restartFromResult" class="restart-btn">⟳ 重历灵魂迷途 ⟳</button>
+        `;
+        resultContainer.innerHTML = html;
+        
+        quizWrapper.classList.add('hide');
+        resultContainer.classList.remove('hide');
+        
+        document.getElementById('restartFromResult').addEventListener('click', () => {
+            coverDiv.classList.remove('hide');
+            resultContainer.classList.add('hide');
+            userAnswers = new Array(totalQ).fill(null);
+            currentIdx = 0;
+        });
+    }
+
+    function startTest() {
+        coverDiv.classList.add('hide');
+        quizWrapper.classList.remove('hide');
+        resultContainer.classList.add('hide');
+        resetLocalState();
+        renderCurrentQuestion();
+    }
+
+    function resetLocalState() {
+        userAnswers = new Array(totalQ).fill(null);
+        currentIdx = 0;
+        if (nextBtn) nextBtn.classList.remove('hide');
+        if (submitBtn) submitBtn.classList.add('hide');
+        if (prevBtn) prevBtn.style.visibility = 'hidden';
+        updateProgress();
+        qCounterSpan.innerText = `第1 / ${totalQ}题`;
+        if(questionsContainer) questionsContainer.classList.remove('hide');
+        const navDiv = document.querySelector('.nav-buttons');
+        if(navDiv) navDiv.classList.remove('hide');
+        const progDiv = document.querySelector('.progress-area');
+        if(progDiv) progDiv.classList.remove('hide');
+    }
+
+    function renderCurrentQuestion() {
+        const q = questions[currentIdx];
+        const selectedVal = userAnswers[currentIdx];
+        let html = `<div class="question-card">
+            <div class="q-num">▍ 疑问 ${currentIdx+1} / ${totalQ}</div>
+            <div class="q-text">${escapeHtml(q.text)}</div>
+            <div class="options">`;
+        q.options.forEach((opt, idx) => {
+            const checked = (selectedVal === idx) ? 'checked' : '';
+            html += `<label class="option">
+                <input type="radio" name="question" value="${idx}" ${checked}>
+                <span class="opt-label">${escapeHtml(opt)}</span>
+            </label>`;
+        });
+        html += `</div></div>`;
+        questionsContainer.innerHTML = html;
+
+        document.querySelectorAll('input[name="question"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                userAnswers[currentIdx] = parseInt(e.target.value);
+                updateProgress();
+                if(currentIdx === totalQ-1){
+                    const allDone = userAnswers.every(a => a !== null);
+                    submitBtn.disabled = !allDone;
+                }
+            });
+        });
+        updateProgress();
+        qCounterSpan.innerText = `第${currentIdx+1} / ${totalQ}题`;
+        prevBtn.style.visibility = currentIdx === 0 ? 'hidden' : 'visible';
+        if(currentIdx === totalQ-1){
+            nextBtn.classList.add('hide');
+            submitBtn.classList.remove('hide');
+            const allDone = userAnswers.every(a => a !== null);
+            submitBtn.disabled = !allDone;
+        } else {
+            nextBtn.classList.remove('hide');
+            submitBtn.classList.add('hide');
+        }
+    }
+
+    function updateProgress() {
+        const answered = userAnswers.filter(v => v !== null).length;
+        progressFill.style.width = `${(answered/totalQ)*100}%`;
+    }
+
+    function showWarning(msg) {
+        let warn = document.querySelector('.warning-msg');
+        if(!warn && questionsContainer){
+            warn = document.createElement('div');
+            warn.className = 'warning-msg';
+            questionsContainer.prepend(warn);
+        } else if(!warn && document.querySelector('.quiz-panel')){
+            warn = document.createElement('div');
+            document.querySelector('.quiz-panel').prepend(warn);
+        }
+        if(warn) {
+            warn.innerText = msg;
+            setTimeout(() => { if(warn && warn.remove) warn.remove(); }, 1700);
+        } else alert(msg);
+    }
+
+    function next() {
+        if(userAnswers[currentIdx] === null) {
+            showWarning("请先选择一项答案，再继续前行。");
+            return;
+        }
+        if(currentIdx < totalQ-1){
+            currentIdx++;
+            renderCurrentQuestion();
+        }
+    }
+
+    function prev() {
+        if(currentIdx > 0){
+            currentIdx--;
+            renderCurrentQuestion();
+        }
+    }
+
+    function onSubmit() {
+        if(!userAnswers.every(a => a !== null)){
+            showWarning("请完成所有题目再揭示命运。");
+            return;
+        }
+        showResult();
+    }
+
+    function escapeHtml(str){
+        if(!str) return "";
+        return str.replace(/[&<>]/g, function(m){
+            if(m === '&') return '&amp;';
+            if(m === '<') return '&lt;';
+            if(m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    startBtn.addEventListener('click', startTest);
+    nextBtn.addEventListener('click', next);
+    prevBtn.addEventListener('click', prev);
+    submitBtn.addEventListener('click', onSubmit);
+</script>
+</body>
+</html>
